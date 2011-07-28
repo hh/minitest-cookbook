@@ -1,0 +1,26 @@
+* minitest cookbook
+** recipes
+*** default
+    Installs gems and registers the report handler
+*** examples
+    Multiple examples showing a variety of assertions, many of which
+    fail. It's your challenge to write a recipe that satisfies these conditions.
+** LWRP
+*** minitest_unit_testcase
+    Requires a Symbol beginning with /test_/ as the namevar, for
+    example: :test_truth
+
+    The _block_ paramater contains any assertions you wish to have
+    executed during the report handler phase at the end of
+    convergence.
+
+    For further examples please refer to the MiniTest [[http://bfts.rubyforge.org/minitest/index.html][documentation]]
+    for [[http://bfts.rubyforge.org/minitest/MiniTest/Assertions.html][assertions]]
+** Report Handler
+*** chefminitest
+    This report handler simply creates a MiniTest::Unit test runner
+    and identifies all minitest_unit_testcase resources created during
+    compilation and dynamically builds test classes with method names
+    matching the Symbol resource name specified and the block as the
+    method body.
+  
