@@ -17,7 +17,7 @@
 
 def initialize(*args)
   super
-  @action = :test
+  @action = :create
 end
 
 def block(&block)
@@ -28,6 +28,5 @@ def block(&block)
   end
 end
 
-
-actions :test
-attribute :name, :kind_of => String, :name_attribute => true
+actions :create
+attribute :name, :kind_of => Symbol, :name_attribute => true

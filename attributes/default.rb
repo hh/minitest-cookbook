@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-default.minitest.gem_dependencies = %w[minitest net-tftp]
+default.minitest.gem_dependencies = %w[net-tftp]

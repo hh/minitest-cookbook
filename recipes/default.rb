@@ -16,17 +16,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+gem_package "minitest" do
+  version "~> 2.3.1"
+end.run_action(:install)
 
 node.minitest.gem_dependencies.each do |gem|
   gem_package(gem) { action :nothing }.run_action(:install)
 end
 
-minitest_unit_testcase "http_port" do
-  block do
-    assert_instance_of( Socket,
-                        Socket.tcp("127.0.0.1", 80),
-                        "socket could not be established to port localhost:80"
-                        )
-  end
+include_recipe "chef_handler"
+cookbook_file(File.join(node.chef_handler.handler_path, "chefminitest.rb")).run_action(:create)
+chef_handler "ChefMiniTest::Handler" do
+  source File.join(node.chef_handler.handler_path, "chefminitest.rb")
   action :nothing
-end
+end.run_action(:enable)
+
