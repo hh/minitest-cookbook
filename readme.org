@@ -15,7 +15,8 @@
     convergence.
 
     For further examples please refer to the MiniTest [[http://bfts.rubyforge.org/minitest/index.html][documentation]]
-    for [[http://bfts.rubyforge.org/minitest/MiniTest/Assertions.html][assertions]]
+    for [[http://bfts.rubyforge.org/minitest/MiniTest/Assertions.html][assertions]] - there is also a
+    [[http://cheat.errtheblog.com/s/minitest][cheatsheet]] online!
 ** Report Handler
 *** chefminitest
     This report handler simply creates a MiniTest::Unit test runner
@@ -23,4 +24,4 @@
     compilation and dynamically builds test classes with method names
     matching the Symbol resource name specified and the block as the
     method body.
-  
+
