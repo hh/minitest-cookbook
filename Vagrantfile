@@ -6,13 +6,9 @@ Vagrant::Config.run do |config|
     minitest.vm.box = 'natty64_cloudscaling_4.1'
     minitest.vm.box_url = "http://d1lfnqkkmlbdsd.cloudfront.net/vagrant/natty64_cloudscaling_4.1.box"
     minitest.vm.provision :chef_solo do |chef|
-      chef.cookbooks_path = [:vm, "/tmp/vagrant-chef/cookbooks" ]
+      chef.cookbooks_path = "cookbooks"
       chef.add_recipe "minitest"
       chef.add_recipe "minitest::examples"
     end
-
-    minitest.vm.share_folder( File.basename(__FILE__),
-                              "/tmp/vagrant-chef/cookbooks/minitest",
-                              File.dirname(__FILE__) )
   end
 end

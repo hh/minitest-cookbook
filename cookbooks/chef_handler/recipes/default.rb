@@ -1,6 +1,9 @@
-# Cookbook: minitest
 #
-# Copyright 2011, AJ Christensen <aj@junglist.gen.nz>
+# Author:: Seth Chisamore (<schisamo@opscode.com>)
+# Cookbook Name:: chef_handlers
+# Recipe:: default
+#
+# Copyright 2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,19 +18,14 @@
 # limitations under the License.
 #
 
-def initialize(*args)
-  super
-  @action = :test
-end
+Chef::Log.info("Chef Handlers will be at: #{node['chef_handler']['handler_path']}")
 
-def block(&block)
-  if block_given? and block
-    @block = block
-  else
-    @block
-  end
-end
+remote_directory node['chef_handler']['handler_path'] do
+  source 'handlers'
+  owner 'root'
+  group 'root'
+  mode "0755"
+  recursive true
+  action :nothing
+end.run_action(:create)
 
-
-actions :test
-attribute :name, :kind_of => String, :name_attribute => true
