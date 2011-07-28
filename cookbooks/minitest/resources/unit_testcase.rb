@@ -1,6 +1,4 @@
-#
-# Cookbook Name:: minitest
-# Recipe:: default
+# Cookbook: minitest
 #
 # Copyright 2011, AJ Christensen <aj@junglist.gen.nz>
 #
@@ -17,16 +15,18 @@
 # limitations under the License.
 #
 
-node.minitest.gem_dependencies.each do |gem|
-  gem_package(gem) { action :nothing }.run_action(:install)
+def initialize(*args)
+  super
+  @action = :create
 end
 
-minitest_unit_testcase "http_port" do
-  block do
-    assert_instance_of( Socket,
-                        Socket.tcp("127.0.0.1", 80),
-                        "socket could not be established to port localhost:80"
-                        )
+def block(&block)
+  if block_given? and block
+    @block = block
+  else
+    @block
   end
-  action :nothing
 end
+
+actions :create
+attribute :name, :kind_of => Symbol, :name_attribute => true
