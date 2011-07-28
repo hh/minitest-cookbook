@@ -5,4 +5,4 @@ description      "Installs minitest from gem and makes available some LWRP for i
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.4"
 
-depends "chef_handler"
+depends "chef_handler", "~> 1.0.4"
