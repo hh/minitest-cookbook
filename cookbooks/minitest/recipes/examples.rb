@@ -1,3 +1,7 @@
+gem_package "sinatra" do
+  action :nothing
+end.run_action(:install)
+
 minitest_unit_testcase :test_truth do
   block do
     refute_equal true, false, "true is not false"
@@ -11,7 +15,7 @@ dns_ndots = 1
 
 { :test_http_port => Proc.new do
     require 'socket'
-    refute_instance_of Socket, Socket.tcp(ipaddress, http_port), "http_port: socket could not be established to port #{ipaddress}:#{http_port}"
+    assert_instance_of Socket, Socket.tcp(ipaddress, http_port), "http_port: socket could not be established to port #{ipaddress}:#{http_port}"
   end,
   :test_http_fitter_happier => Proc.new do
     require 'uri'
@@ -23,7 +27,7 @@ dns_ndots = 1
       uri = URI::HTTP.build :host => ipaddress, :port => http_port, :path => path
       request = Chef::REST::RESTRequest.new(:GET, uri, nil)
       Timeout::timeout(5) do
-        refute_instance_of Net::HTTPOK, request.call, "http_fitter_happier: GET to #{uri.inspect} did not return HTTPOK"
+        assert_instance_of Net::HTTPOK, request.call, "http_fitter_happier: GET to #{uri.inspect} did not return HTTPOK"
       end
     end
 
