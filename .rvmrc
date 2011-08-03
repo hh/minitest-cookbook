@@ -10,8 +10,8 @@ if rvm list strings | grep -q "${ruby_string}" ; then
     else
         rvm --create  "${ruby_string}@${gemset_name}"
         gem install bundler --no-rdoc --no-ri
+        bundle
     fi
-    bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
 else
     echo "${ruby_string} was not found, please run 'rvm install ${ruby_string}' and then cd back into the project directory."
 fi
