@@ -3,6 +3,7 @@ Gem.clear_paths
 require "sinatra/base"
 class MiniTestApp < Sinatra::Base
   configure do
+    disable :logging
     set :port => 80
   end
 
