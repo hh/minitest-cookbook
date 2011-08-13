@@ -20,6 +20,13 @@ ruby_block "launch sinatra" do
   action :nothing
 end.run_action(:create)
 
+minitest_unit_testcase :test_inline_truth do
+  block do
+    refute_equal true, false, "true is not false"
+  end
+  action :test
+end
+
 minitest_unit_testcase :test_truth do
   block do
     refute_equal true, false, "true is not false"

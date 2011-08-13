@@ -5,11 +5,11 @@ require "minitest/unit"
 
 class ChefMiniTestRunner < MiniTest::Unit
   def before_suites
-    Chef::Log.info "ChefMiniTestRunner starting"
+    Chef::Log.info "chef mini test runner starting"
   end
 
   def after_suites
-    Chef::Log.info "ChefMiniTestRunner completed"
+    Chef::Log.info "chef mini test runner completed"
   end
 
   def _run_suites(suites, type)
@@ -36,7 +36,7 @@ module ChefMiniTest
     def report
      MiniTest::Unit.runner = ChefMiniTestRunner.new
       run_status.updated_resources.select do |resource|
-        next unless resource.resource_name == :minitest_unit_testcase and resource.respond_to? :block and !resource.block.nil?
+        next unless resource.resource_name == :minitest_unit_testcase and resource.respond_to? :block and !resource.block.nil? and resource.action =~ /create/
         testcase = Class.new(MiniTest::Unit::TestCase)
         testcase.class_eval do
           define_method resource.name, &resource.block

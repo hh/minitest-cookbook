@@ -28,5 +28,5 @@ def block(&block)
   end
 end
 
-actions :create
+actions :create, :test
 attribute :name, :kind_of => Symbol, :name_attribute => true
