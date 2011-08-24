@@ -41,6 +41,9 @@ action :test do
   testcase = Class.new(MiniTest::Unit::TestCase)
   testcase.class_eval do
     define_method resource.name, &resource.block
+    define_method :node do
+      resource.node
+    end
   end
   new_resource.updated_by_last_action(!!MiniTest::Unit.new.run(["-v"]))
 end

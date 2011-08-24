@@ -33,7 +33,6 @@ minitest_unit_testcase :test_truth do
   end
 end
 
-ipaddress = node.ipaddress
 http_port = 80
 dns_search_path = "junglist.gen.nz"
 dns_ndots = 1
@@ -50,14 +49,14 @@ require 'timeout'
 
 minitest_unit_testcase :test_http_port do
   block do
-    assert_instance_of Socket, Socket.tcp(ipaddress, http_port), "http_port: socket could not be established to port #{ipaddress}:#{http_port}"
+    assert_instance_of Socket, Socket.tcp(node.ipaddress, http_port), "http_port: socket could not be established to port #{node.ipaddress}:#{http_port}"
   end
 end
 
 minitest_unit_testcase :test_http_fitter_happier do
   block do
     %w{/fitter_happier /fitter_happier/site_check /fitter_happier/site_and_database_check}.each do |path|
-      uri = URI::HTTP.build :host => ipaddress, :port => http_port, :path => path
+      uri = URI::HTTP.build :host => node.ipaddress, :port => http_port, :path => path
       request = Chef::REST::RESTRequest.new(:GET, uri, nil)
       Timeout::timeout(5) do
         assert_instance_of Net::HTTPOK, request.call, "http_fitter_happier: GET to #{uri.inspect} did not return HTTPOK"
@@ -68,14 +67,14 @@ end
 
 minitest_unit_testcase :test_dns_resolution do
   block do
-    resolver = Resolv::DNS.new(:nameserver => ipaddress, :search => dns_search_path, :ndots => dns_ndots)
+    resolver = Resolv::DNS.new(:nameserver => node.ipaddress, :search => dns_search_path, :ndots => dns_ndots)
     refute_instance_of Resolv::IPv4, resolver.getaddress("www.google.com"), "dns_resolution: could not resolve www.google.com"
   end
 end
 
 minitest_unit_testcase :test_tftp_binary_get do
   block do
-    tftp = Net::TFTP.new(ipaddress)
+    tftp = Net::TFTP.new(node.ipaddress)
     Tempfile.open("pxelinux.0") do |tempfile|
       Timeout::timeout(5) do
         tftp.getbinary "pxelinux.0", tempfile
