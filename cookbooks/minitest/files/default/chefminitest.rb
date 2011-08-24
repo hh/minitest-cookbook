@@ -40,6 +40,9 @@ module ChefMiniTest
         testcase = Class.new(MiniTest::Unit::TestCase)
         testcase.class_eval do
           define_method resource.name, &resource.block
+          define_method :node do
+            resource.node
+          end
         end
       end
       MiniTest::Unit.new.run(["-v"])
