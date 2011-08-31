@@ -7,35 +7,36 @@ rescue LoadError => e
 end
 
 
-class ChefMiniTestInlineRunner < MiniTest::Unit
-  def before_suites
-    Chef::Log.info "chef minitest inline runner starting"
-  end
-
-  def after_suites
-    Chef::Log.info "chef minitest inline runner completed"
-  end
-
-  def _run_suites(suites, type)
-    begin
-      before_suites
-      super(suites, type)
-    ensure
-      after_suites
-    end
-  end
-
-  def _run_suite(suite, type)
-    begin
-      suite.before_suite if suite.respond_to?(:before_suite)
-      super(suite, type)
-    ensure
-      suite.after_suite if suite.respond_to?(:after_suite)
-    end
-  end
-end
 
 action :test do
+  class ChefMiniTestInlineRunner < MiniTest::Unit
+    def before_suites
+      Chef::Log.info "chef minitest inline runner starting"
+    end
+
+    def after_suites
+      Chef::Log.info "chef minitest inline runner completed"
+    end
+
+    def _run_suites(suites, type)
+      begin
+        before_suites
+        super(suites, type)
+      ensure
+        after_suites
+      end
+    end
+
+    def _run_suite(suite, type)
+      begin
+        suite.before_suite if suite.respond_to?(:before_suite)
+        super(suite, type)
+      ensure
+        suite.after_suite if suite.respond_to?(:after_suite)
+      end
+    end
+  end
+
   resource = new_resource
   MiniTest::Unit.runner = ChefMiniTestInlineRunner.new
   testcase = Class.new(MiniTest::Unit::TestCase)
