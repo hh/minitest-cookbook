@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 gem_package "minitest" do
-  version "~> 2.3.1"
+  version "2.3.1"
+#  version "~> 2.3.1"
 end.run_action(:install)
 
 node.minitest.gem_dependencies.each do |gem|
