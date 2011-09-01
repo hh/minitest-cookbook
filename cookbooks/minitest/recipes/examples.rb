@@ -29,6 +29,7 @@ end
 
 minitest_unit_testcase :test_truth do
   block do
+    sleep 5 # give sinatra a few seconds to load
     refute_equal true, false, "true is not false"
   end
 end
